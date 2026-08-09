@@ -1,98 +1,384 @@
-/* Universal Styles */
+/* ==========================================================================
+   Tokens
+   ========================================================================== */
+:root {
+  --steelblue: steelblue;
+  --steelblue-dark: #3a6f96;
+  --khaki: khaki;
+  --khaki-dark: #d8cc6e;
+  --snow: snow;
+  --whitesmoke: whitesmoke;
+  --text-dark: #33393f;
+  --lightslategrey: lightslategrey;
+  --danger: #c0505a;
+
+  --font-display: 'Rock Salt', cursive;
+  --font-body: 'Quicksand', sans-serif;
+
+  --radius: 6px;
+  --transition: 0.18s ease;
+}
+
+/* ==========================================================================
+   Universal Styles
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
-  margin: 0px;
-  background-color: whitesmoke;
-  font-family: 'Rock Salt', cursive;
+  margin: 0;
+  background-color: var(--whitesmoke);
+  font-family: var(--font-body);
+  color: var(--text-dark);
   text-align: center;
 }
 
 .secondary-background {
-  background-color: snow;
+  background-color: var(--snow);
 }
 
 .tagline {
-  font-family: 'Quicksand', sans-serif;
-  color: lightslategrey;
-  line-height: 125px;
+  font-family: var(--font-body);
+  color: var(--lightslategrey);
 }
 
-/* Header */
+/* Visible keyboard focus everywhere */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid var(--steelblue-dark);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* ==========================================================================
+   Header
+   ========================================================================== */
+#header {
+  background-color: var(--steelblue);
+  padding: 20px 16px;
+}
+
 h1 {
   margin: 0;
-  background-color: steelblue;
-  line-height: 100px;
+  font-family: var(--font-display);
   color: khaki;
+  font-size: clamp(1.4rem, 4vw, 2.2rem);
+  line-height: 1.4;
 }
 
-h2 {
-  margin: 10px;
+h2.tagline {
+  margin: 10px 0 0;
+  font-size: clamp(0.8rem, 2.2vw, 1rem);
+  font-weight: 500;
 }
 
-/* App Container */
+/* ==========================================================================
+   App Container
+   ========================================================================== */
 .container {
-  border: 2px solid snow;
-  /* Task: Turn into a flex container */
+  border: 2px solid var(--snow);
   display: flex;
+  align-items: flex-start;
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
-/* To Do Section */
+/* ==========================================================================
+   To Do Section
+   ========================================================================== */
 .week {
-  /* Task: Turn into inline-flex, grow by 3, and stack vertically */
-  display: inline-flex;
-  flex-grow: 3;
+  display: flex;
   flex-direction: column;
+  flex-grow: 3;
+  flex-basis: 0;
+  min-width: 0;
 }
 
 .row {
-  min-height: 200px;
   display: flex;
-  /* Task: Wrap items and add space around them */
-  flex-wrap: wrap;
-  justify-content: space-around;
-}
-
-.square {
-  width: 125px;
-  height: 125px;
-  padding: 10px;
-  /* Task: Turn into flex container and center children */
-  display: flex;
-  justify-content: center;
+  align-items: stretch;
+  border-bottom: 1px solid var(--snow);
 }
 
 .day.square {
-  background-color: steelblue;
-  border: 1px solid white;
+  flex: 0 0 90px;
+  width: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--steelblue);
+  border-right: 1px solid white;
 }
 
-.task.square {
-  background-color: khaki;
-  border: 1px solid white;
+.day.square h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  color: khaki;
+  letter-spacing: 1px;
 }
 
-.task p {
-  font-family: 'Quicksand', sans-serif;
+.tasks-cell {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 12px;
+  text-align: left;
+}
+
+.task-list {
+  list-style: none;
+  margin: 0 0 8px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--khaki);
+  border: 1px solid white;
+  border-radius: var(--radius);
+  padding: 6px 8px;
+  animation: task-in 0.18s ease;
+}
+
+@keyframes task-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.task-item input[type="checkbox"] {
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  accent-color: var(--steelblue);
+  cursor: pointer;
+}
+
+.task-item .task-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 0.8rem;
   font-weight: 700;
-  font-size: 12px;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
-/* Reminders */
+.task-item.done .task-text {
+  text-decoration: line-through;
+  opacity: 0.55;
+}
+
+.task-item .delete-btn {
+  flex: 0 0 auto;
+}
+
+.empty-hint {
+  margin: 0 0 8px;
+  font-size: 0.75rem;
+  color: var(--lightslategrey);
+  font-style: italic;
+}
+
+/* Shared add-item form (tasks + reminders) */
+.add-form {
+  display: flex;
+  gap: 6px;
+}
+
+.add-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  padding: 7px 9px;
+  border: 1px solid #ccc;
+  border-radius: var(--radius);
+}
+
+.add-btn,
+.delete-btn {
+  font-family: var(--font-body);
+  font-weight: 700;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background-color var(--transition), transform var(--transition);
+}
+
+.add-btn {
+  flex: 0 0 auto;
+  width: 34px;
+  background-color: var(--steelblue);
+  color: white;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.add-btn:hover {
+  background-color: var(--steelblue-dark);
+}
+
+.delete-btn {
+  width: 22px;
+  height: 22px;
+  background-color: transparent;
+  color: var(--lightslategrey);
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.delete-btn:hover {
+  color: var(--danger);
+  transform: scale(1.15);
+}
+
+/* ==========================================================================
+   Reminders
+   ========================================================================== */
 .reminders {
-  background-color: khaki;
-  /* Task: Turn into inline-flex and grow by 2 */
-  display: inline-flex;
+  background-color: var(--khaki);
+  display: flex;
+  flex-direction: column;
   flex-grow: 2;
+  flex-basis: 0;
+  min-width: 0;
+  padding: 14px;
+  text-align: left;
+  align-self: stretch;
 }
 
 .reminders h3 {
   width: 100%;
-  margin: 10px;
-  color: black;
-  line-height: 90px;
-  font-size: 24px;
+  margin: 0 0 10px;
+  color: var(--text-dark);
+  font-size: 1.1rem;
+  text-align: center;
 }
 
-/* Footer */
+.reminders-list {
+  list-style: none;
+  margin: 0 0 8px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.reminders-list .task-item {
+  background-color: var(--snow);
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
 footer {
-  font-size: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 16px 12px;
+  font-size: 1rem;
+}
+
+.clear-btn {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.75rem;
+  color: var(--lightslategrey);
+  background: transparent;
+  border: 1px solid var(--lightslategrey);
+  border-radius: var(--radius);
+  padding: 6px 10px;
+  cursor: pointer;
+  transition: background-color var(--transition), color var(--transition);
+}
+
+.clear-btn:hover {
+  background-color: var(--danger);
+  border-color: var(--danger);
+  color: white;
+}
+
+/* ==========================================================================
+   Tablet (<= 900px)
+   ========================================================================== */
+@media (max-width: 900px) {
+  .day.square {
+    flex-basis: 72px;
+    width: 72px;
+  }
+
+  .day.square h3 {
+    font-size: 0.75rem;
+  }
+
+  .reminders {
+    padding: 12px;
+  }
+}
+
+/* ==========================================================================
+   Mobile (<= 600px)
+   ========================================================================== */
+@media (max-width: 600px) {
+  .container {
+    flex-direction: column;
+    border-width: 1px;
+  }
+
+  .week,
+  .reminders {
+    flex-grow: 0;
+    width: 100%;
+  }
+
+  .row {
+    flex-direction: column;
+  }
+
+  .day.square {
+    width: 100%;
+    flex-basis: auto;
+    padding: 6px;
+    border-right: none;
+    border-bottom: 1px solid white;
+  }
+
+  .day.square h3 {
+    font-size: 0.85rem;
+  }
+
+  .tasks-cell {
+    padding: 10px;
+  }
+
+  footer {
+    flex-direction: column;
+    gap: 8px;
+  }
 }

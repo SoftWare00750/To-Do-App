@@ -1,68 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <title>To Do App</title>
-  <link rel='stylesheet' href='style.css'>
-  <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
-  <link href='https://fonts.googleapis.com/css?family=Rock+Salt' rel='stylesheet'>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To Do or Not To Do</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Rock+Salt&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
   <!-- Header -->
-  <div id='header'>
+  <header id="header">
     <h1>To Do or Not To Do</h1>
-    <h2 class='tagline'>(your priorities at a glance)</h2>
-  </div>
+    <h2 class="tagline">(your priorities at a glance)</h2>
+  </header>
 
   <!-- App Container -->
-  <div class='container'>
+  <main class="container">
 
-    <!-- To Do Section -->
-    <div class='week'>
-      <div class='row secondary-background'>
-        <div class='day square'><h3>MON</h3></div>
-        <div class='task square'>
-          <p> Insert some information about your week here :) </p>
-        </div>
-        <div class='task square'></div>
-        <div class='task square'></div>
-      </div>
-      <div class='row'>
-        <div class='day square'><h3>TUE</h3></div>
-        <div class='task square'></div>
-        <div class='task square'></div>
-        <div class='task square'></div>
-      </div>
-      <div class='row secondary-background'>
-        <div class='day square'><h3>WED</h3></div>
-        <div class='task square'></div>
-        <div class='task square'></div>
-        <div class='task square'></div>
-      </div>
-      <div class='row'>
-        <div class='day square'><h3>THU</h3></div>
-        <div class='task square'></div>
-        <div class='task square'></div>
-        <div class='task square'></div>
-      </div>
-      <div class='row secondary-background'>
-        <div class='day square'><h3>FRI</h3></div>
-        <div class='task square'></div>
-        <div class='task square'></div>
-        <div class='task square'></div>
-      </div>
-    </div>
+    <!-- To Do Section: filled in by script.js from the DAYS list -->
+    <section class="week" id="week" aria-label="Weekly tasks"></section>
 
     <!-- Reminders Section -->
-    <div class='reminders'>
+    <aside class="reminders" aria-label="Reminders">
       <h3>Reminders</h3>
-    </div>
-  </div>
+      <ul class="reminders-list" id="remindersList"></ul>
+      <p class="empty-hint" id="remindersEmptyHint">No reminders yet.</p>
+      <form class="add-form" id="reminderForm">
+        <input type="text" id="reminderInput" class="add-input" placeholder="Add a reminder…" maxlength="120"
+          autocomplete="off" required>
+        <button type="submit" class="add-btn" aria-label="Add reminder">+</button>
+      </form>
+    </aside>
+
+  </main>
 
   <!-- Footer -->
   <footer>
-    <span class='tagline'>copyright nottodo.com</span>
+    <span class="tagline">copyright nottodo.com</span>
+    <button id="clearAllBtn" class="clear-btn" type="button">Clear all data</button>
   </footer>
+
+  <script src="script.js"></script>
 </body>
+
 </html>
